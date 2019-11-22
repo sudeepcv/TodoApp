@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TodoDataService from '../../api/todo/TodoDataService.js';
 class ListTodosComponent extends Component {
     constructor() {
         super()
@@ -9,6 +10,15 @@ class ListTodosComponent extends Component {
                 { id: 3, description: "test 3", done: false, targetDate: new Date() }]
         }
     }
+    componentDidMount(){
+
+        TodoDataService.todos("sudeep").then(response => {
+            this.setState({todos:response.data})
+        })
+
+    }
+
+
     render() {
         return (
             <div>
