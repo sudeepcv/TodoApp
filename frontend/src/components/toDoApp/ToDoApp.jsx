@@ -9,6 +9,7 @@ import ListTodosComponent from './ListTodosComponent.jsx';
 import FooterComponent from './FooterComponent.jsx';
 import WelcomeComponent from './WelcomeComponent.jsx';
 import LogoutComponent from './LogoutComponent.jsx';
+import ToDoComponent from './ToDoComponent.jsx';
 
 class ToDoApp extends Component {
 
@@ -23,6 +24,7 @@ class ToDoApp extends Component {
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <AuthenticatedRoutes path="/welcome/:name" component={WelcomeComponent} />
+                            <AuthenticatedRoutes path="/todos/:id" component={ToDoComponent} />
                             <AuthenticatedRoutes path="/todos" component={ListTodosComponent} />
                             <Route path="/logout" component={LogoutComponent} />
 

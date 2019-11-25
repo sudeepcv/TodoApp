@@ -14,18 +14,22 @@ class LoginComponent extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
     login() {
-        if (this.state.username === "sudeep" && this.state.password === "sudeep") {
+        AuthenticationService.executeBasicAuthenticationService(this.state.username,this.state.password).then(
+            response => {
             AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
+            AuthenticationService.setupAxiosInterceptors()
             this.props.history.push(`/welcome/${this.state.username}`)
-
-            // window.location.replace("/welcome/"+this.state.username);
-
             this.setState({ showSuccessMessage: true })
             this.setState({ hasLoginFailed: false })
-        } else {
+            }
+        ).catch(
+            () => {
             this.setState({ showSuccessMessage: false })
             this.setState({ hasLoginFailed: true })
-        }
+            }
+        );
+
+
     }
 
     render() {
