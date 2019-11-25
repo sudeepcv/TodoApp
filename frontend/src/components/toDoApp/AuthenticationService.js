@@ -1,47 +1,60 @@
 import axios from 'axios';
-class AuthenticationService{
-    registerSuccessfulLogin(username,password){
+class AuthenticationService {
+    registerSuccessfulLogin(username, password) {
         let basicAuthHeader = this.createBasicAuthToken(username, password)
-        sessionStorage.setItem('authenticatedUser',username)
+        sessionStorage.setItem('authenticatedUser', username)
         this.setupAxiosInterceptors(basicAuthHeader)
     }
+    registerSuccessfulLoginForJwt(username, token) {
+        sessionStorage.setItem('authenticatedUser', username)
+        this.setupAxiosInterceptors(this.createJWTToken(token))
+    }
+    createJWTToken(token) {
+        return 'Bearer ' + token
+    }
 
-        logout(){
+    logout() {
         sessionStorage.removeItem('authenticatedUser')
     }
 
-        executeBasicAuthenticationService(username, password) {
+    executeBasicAuthenticationService(username, password) {
         return axios.get(`/basicauth`,
             { headers: { authorization: this.createBasicAuthToken(username, password) } })
     }
+    executeJwtAuthenticationService(username, password) {
+        return axios.post(`/authenticate`, {
+            username,
+            password
+        })
+    }
 
-       createBasicAuthToken(username, password) {
+    createBasicAuthToken(username, password) {
         return 'Basic ' + window.btoa(username + ":" + password)
     }
 
-    isLoggedin(){
-        let user=sessionStorage.getItem('authenticatedUser')
-        if(user===null){
+    isLoggedin() {
+        let user = sessionStorage.getItem('authenticatedUser')
+        if (user === null) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    getLoggedinUser(){
-                let user=sessionStorage.getItem('authenticatedUser')
-        if(user===null){
+    getLoggedinUser() {
+        let user = sessionStorage.getItem('authenticatedUser')
+        if (user === null) {
             return '';
-        }else{
+        } else {
             return user;
         }
     }
 
-       setupAxiosInterceptors(basicAuthHeader) {
+    setupAxiosInterceptors(token) {
         axios.interceptors.request.use(
             (config) => {
                 if (this.isLoggedin()) {
-                    config.headers.authorization = basicAuthHeader
-                }
+                    config.headers.authorization = token
+                } 
                 return config
             }
         )

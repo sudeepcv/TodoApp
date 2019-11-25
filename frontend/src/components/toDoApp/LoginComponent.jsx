@@ -14,10 +14,10 @@ class LoginComponent extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
     login() {
-        AuthenticationService.executeBasicAuthenticationService(this.state.username,this.state.password).then(
+        AuthenticationService.executeJwtAuthenticationService(this.state.username,this.state.password).then(
             response => {
-            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
-            AuthenticationService.setupAxiosInterceptors()
+            AuthenticationService.registerSuccessfulLoginForJwt(this.state.username, response.data.token)
+            // AuthenticationService.setupAxiosInterceptors(response.data.token)
             this.props.history.push(`/welcome/${this.state.username}`)
             this.setState({ showSuccessMessage: true })
             this.setState({ hasLoginFailed: false })
