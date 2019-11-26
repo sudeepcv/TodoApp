@@ -14,3 +14,10 @@ spring.datasource.password=
 To open in online gitpod ide:
 
 https://gitpod.io/#https://github.com/sudeepcv/TodoApp
+
+user name and password for react application:
+
+
+username:sudeep
+
+password:sudeep
