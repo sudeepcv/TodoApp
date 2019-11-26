@@ -10,3 +10,7 @@ spring.datasource.url= jdbc:h2:mem:test
 spring.datasource.username=sa
 
 spring.datasource.password=
+
+To open in online gitpod ide:
+
+https://gitpod.io/#https://github.com/sudeepcv/TodoApp
