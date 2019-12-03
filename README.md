@@ -1,4 +1,4 @@
-# TodoApp
+# TodoApp-  springboot reactjs
 spring boot to do app
 
 To run the app: mvn spring-boot:run
